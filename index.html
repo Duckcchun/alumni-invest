@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>알럼나이 모의 엔젤 투자 · 어흥콘</title>
+  <meta name="description" content="해커톤과 어흥콘 리팩토링을 거친 14기 15개 팀. 선배님의 가상 투자금 1표를 가장 기대되는 팀에 넣어 주세요." />
+  <meta property="og:title" content="선배님, 어느 팀에 투자하시겠어요?" />
+  <meta property="og:description" content="멋쟁이사자처럼 14기 · 어흥콘 출품 15팀 알럼나이 모의 엔젤 투자" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- 멋사 BI 서체: 국문 제목 SUIT, 국문 본문 Pretendard, 영문 Gotham 대체 Montserrat -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400..800&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="demoBanner" class="demo-banner" hidden>데모 모드 · 투표가 이 브라우저에만 저장돼요. config.js에 Supabase 키를 넣으면 실제 투표가 시작됩니다.</div>
+
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <!-- 원본 로고 파일을 img/logo.png 로 넣으면 그 이미지가 쓰이고, 없으면 아래 SVG 재현본이 나옵니다 -->
+      <a class="brand" href="./" aria-label="멋사대학 홈">
+        <img class="brand-img" src="img/logo.png" alt="멋사대학"
+             onerror="this.remove(); document.getElementById('brandFallback').hidden = false;" />
+        <span id="brandFallback" class="brand-fallback" hidden>
+          <svg class="brand-mark" viewBox="0 0 260 132" aria-hidden="true">
+            <polygon points="0,0 88,0 88,102 184,102 184,128 66,128 66,38" />
+            <polygon points="184,0 258,0 184,46" />
+          </svg>
+          <span class="brand-word">멋사대학</span>
+        </span>
+      </a>
+      <span class="topbar-meta">14기 중앙운영단 × 제3회 어흥콘</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">알럼나이 뉴스레터 · 해커톤 특별호</p>
+        <h1>선배님, 어느 팀에<br />투자하시겠어요?</h1>
+        <p class="lede">중앙 해커톤에서 만들고, 어흥콘에서 리팩토링까지 마친 14기 <b>15개 팀</b>이 IR을 올렸어요.
+          가장 투자하고 싶은 팀 하나에 가상 투자금 <b id="unitLabel">1,000만 원</b>을 넣어 주세요.</p>
+        <button type="button" class="about-btn" data-open-about aria-haspopup="dialog">
+          <span class="about-q" aria-hidden="true">?</span>어흥콘이 뭐예요?
+        </button>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-label">모인 투자금</span>
+            <span class="stat-value" id="statFund">₩0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">참여한 선배</span>
+            <span class="stat-value" id="statInvestors">0명</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label" id="statDeadlineLabel">마감</span>
+            <span class="stat-value" id="statDeadline">진행 중</span>
+          </div>
+        </div>
+
+        <div class="reward" id="reward"></div>
+      </div>
+
+      <!-- 선배들의 한마디 띠: 공개 한마디가 일정 개수 모이면 나타남 -->
+      <div class="ticker" id="ticker" hidden>
+        <div class="wrap ticker-head">
+          <h2 class="ticker-title">선배들의 한마디 <span id="tickerCount"></span></h2>
+          <div class="ticker-actions">
+            <button type="button" class="ticker-pause" id="tickerPause" aria-pressed="false">
+              <span class="ticker-pause-icon" aria-hidden="true"></span><span class="ticker-pause-label">멈추기</span>
+            </button>
+            <a class="ticker-all" href="#wallTitle">전체 보기 →</a>
+          </div>
+        </div>
+        <div class="ticker-row" data-dir="left"><div class="ticker-track"></div></div>
+        <div class="ticker-row" data-dir="right"><div class="ticker-track"></div></div>
+      </div>
+    </section>
+
+    <section class="steps wrap" aria-label="참여 방법">
+      <div class="step"><span class="step-n">1</span><div><b>IR 둘러보기</b><p>카드를 누르면 서비스와 어흥콘에서 달라진 점을 볼 수 있어요.</p></div></div>
+      <div class="step"><span class="step-n">2</span><div><b>한 팀에 투자</b><p>이메일로 1인 1회만 투자할 수 있어요.</p></div></div>
+      <div class="step"><span class="step-n">3</span><div><b>실시간 순위 확인</b><p>투자금은 바로 순위에 반영돼요.</p></div></div>
+    </section>
+
+    <section class="board wrap" aria-labelledby="boardTitle">
+      <div class="section-head">
+        <h2 id="boardTitle">실시간 투자 순위</h2>
+        <span class="live"><span class="live-dot"></span>실시간</span>
+      </div>
+      <ol class="rank-list" id="rankList"></ol>
+      <button class="text-btn" id="rankToggle" type="button">전체 순위 보기</button>
+    </section>
+
+    <section class="gallery wrap" aria-labelledby="galleryTitle">
+      <div class="section-head">
+        <h2 id="galleryTitle">IR 갤러리</h2>
+        <div class="sort" role="group" aria-label="정렬">
+          <button type="button" class="sort-btn is-active" data-sort="shuffle">섞어 보기</button>
+          <button type="button" class="sort-btn" data-sort="fund">투자금 순</button>
+        </div>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="트랙 필터"></div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="wall wrap" aria-labelledby="wallTitle">
+      <div class="section-head">
+        <h2 id="wallTitle">선배들의 한마디</h2>
+        <span class="wall-count" id="wallCount"></span>
+      </div>
+      <p class="wall-sub">투자할 때 남긴 선배님들의 응원과 조언이에요.</p>
+      <div class="chips" id="wallChips" role="group" aria-label="팀별 한마디 필터"></div>
+      <div class="wall-grid" id="wallGrid"></div>
+      <button class="text-btn" id="wallMore" type="button" hidden>더 보기</button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>투자는 모의 이벤트이며 실제 금전 거래가 없습니다. 이메일은 중복 투자 확인과 결과 검증에만 쓰이고 이벤트가 끝나면 파기됩니다.</p>
+      <p>어흥콘 전체 출품작은 <a href="https://www.uhheungcon.site/home" target="_blank" rel="noopener">어흥콘 공식 사이트 ↗</a>에서 볼 수 있어요.</p>
+      <p id="contact"></p>
+    </div>
+  </footer>
+
+  <!-- 팀 상세 + 투자 -->
+  <dialog id="teamDialog" class="dialog" aria-labelledby="dlgTitle">
+    <div class="dlg-cover" id="dlgCover"></div>
+    <button class="dlg-close" type="button" data-close aria-label="닫기">×</button>
+    <div class="dlg-body">
+      <div id="dlgView">
+        <div class="dlg-meta"><span class="track-tag" id="dlgTrack"></span><span id="dlgTeam"></span></div>
+        <h3 id="dlgTitle"></h3>
+        <p class="dlg-tagline" id="dlgTagline"></p>
+        <dl class="dlg-facts">
+          <dt>타깃</dt><dd id="dlgTarget"></dd>
+        </dl>
+        <h4>서비스 소개</h4>
+        <p id="dlgDesc"></p>
+        <h4 class="h4-with-help">해커톤 → 어흥콘, 이렇게 달라졌어요
+          <button type="button" class="help-dot" data-open-about aria-label="어흥콘이 뭐예요?">?</button>
+        </h4>
+        <p id="dlgGrowth" class="growth"></p>
+        <div class="dlg-links" id="dlgLinks"></div>
+        <div class="dlg-comments" id="dlgComments" hidden></div>
+        <div class="dlg-fund"><span>현재 투자금</span><b id="dlgFund"></b></div>
+        <button class="primary-btn" id="dlgInvestBtn" type="button">이 팀에 투자하기</button>
+      </div>
+
+      <form id="investForm" class="invest-form" hidden novalidate>
+        <h3>투자 확인</h3>
+        <p class="invest-sub"><b id="formTeam"></b>에 가상 투자금 <b id="formUnit"></b>을 넣어요. 투자는 1인 1회, 바꿀 수 없어요.</p>
+        <label class="field">
+          <span>이메일</span>
+          <input type="email" id="fEmail" autocomplete="email" inputmode="email" placeholder="lion@example.com" required aria-describedby="emailHint" />
+        </label>
+        <p class="email-hint" id="emailHint" aria-live="polite" hidden></p>
+        <label class="field">
+          <span>기수 <em>(선택)</em></span>
+          <select id="fGen"></select>
+        </label>
+        <fieldset class="field comment-field">
+          <legend>선배의 한마디 <em>(선택)</em></legend>
+          <div class="ctype" role="radiogroup" aria-label="한마디 종류">
+            <label><input type="radio" name="ctype" value="cheer" checked /><span>응원해요</span></label>
+            <label><input type="radio" name="ctype" value="impressive" /><span>인상적이에요</span></label>
+            <label><input type="radio" name="ctype" value="suggest" /><span>이렇게 해 보면 어때요</span></label>
+          </div>
+          <textarea id="fComment" rows="3" maxlength="200" placeholder="팀에게 전하고 싶은 말을 남겨 주세요." aria-label="한마디 내용" aria-describedby="fCount"></textarea>
+          <div class="comment-meta">
+            <label class="check check-sm"><input type="checkbox" id="fPrivate" /><span>팀에게만 전달 (페이지에 공개 안 함)</span></label>
+            <span class="count" id="fCount">0/200</span>
+          </div>
+        </fieldset>
+        <label class="check">
+          <input type="checkbox" id="fAgree" required />
+          <span>중복 투자 확인과 결과 검증을 위해 이메일을 수집하는 데 동의해요. 이벤트 종료 후 파기돼요.</span>
+        </label>
+        <p class="form-error" id="formError" role="alert"></p>
+        <div class="form-actions">
+          <button type="button" class="ghost-btn" id="formBack">돌아가기</button>
+          <button type="submit" class="primary-btn" id="formSubmit">투자 확정</button>
+        </div>
+      </form>
+
+      <div id="doneView" class="done" hidden>
+        <div class="done-mark">✓</div>
+        <h3>투자했어요</h3>
+        <p id="doneText"></p>
+        <button type="button" class="primary-btn" data-to-rank>순위 보러 가기</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 어흥콘 소개 -->
+  <dialog id="aboutDialog" class="dialog about" aria-labelledby="aboutTitle">
+    <button class="dlg-close" type="button" data-close-about aria-label="닫기">×</button>
+    <div class="dlg-body">
+      <p class="about-eyebrow">제3회 어흥콘 · CHECK-IN:NEXT?</p>
+      <h3 id="aboutTitle">어흥콘이 뭐예요?</h3>
+      <p class="about-lede">멋쟁이사자처럼 대학 중앙해커톤에서 만든 서비스를 <b>리팩토링해서 다시 선보이는</b> 대학 연합 데모데이예요. 해커톤에서 끝나지 않고, 서비스가 어떻게 성장했는지 보여 주는 자리예요.</p>
+
+      <ol class="about-flow">
+        <li><b>중앙해커톤</b><span>짧은 기간 안에 팀별로 서비스를 만들어요.</span></li>
+        <li><b>리팩토링</b><span>해커톤 버전의 한계를 스스로 짚고 고쳐서 보고서로 정리해요.</span></li>
+        <li><b>어흥콘</b><span>갤러리워크형 부스에서 달라진 서비스를 직접 시연하고 심사받아요.</span></li>
+      </ol>
+
+      <dl class="dlg-facts about-facts">
+        <dt>일시</dt><dd>지난 9월 20일(일)에 열렸어요</dd>
+        <dt>장소</dt><dd>서울창업허브 공덕 본관 대강당</dd>
+        <dt>주최</dt><dd>멋쟁이사자처럼 대학 (LIKELION UNIV.)</dd>
+        <dt>현장 시상</dt><dd>혁신상 · 참신상 · 인기상 · 대상</dd>
+      </dl>
+
+      <p class="about-note">이 페이지의 모의 투자는 현장 시상과 별개로, 알럼나이 선배님들이 참여하는 이벤트예요. 팀 상세의 <b>"이렇게 달라졌어요"</b>가 바로 리팩토링으로 성장한 부분이에요.</p>
+
+      <div class="about-actions">
+        <a class="ghost-btn" href="https://www.uhheungcon.site/home" target="_blank" rel="noopener">전체 출품작 보기 ↗</a>
+        <button type="button" class="primary-btn" data-close-about>IR 보러 가기</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="teams.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
