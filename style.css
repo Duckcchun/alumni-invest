@@ -396,7 +396,7 @@ html { scroll-behavior: smooth; }
 }
 
 /* ───────── 팀 상세 이미지 갤러리 ───────── */
-.dlg-cover.has-gal { aspect-ratio: 3 / 2; max-height: 52vh; background: var(--black); }
+.dlg-cover.has-gal { width: 100%; aspect-ratio: 3 / 2; max-height: 52vh; background: var(--black); } /* width를 고정해야 높이가 줄어도 가로 폭은 꽉 참 */
 .gal { position: relative; height: 100%; }
 .gal-track {
   display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
