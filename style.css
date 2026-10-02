@@ -52,7 +52,7 @@ a { color: inherit; }
 .brand-img { display: block; height: 24px; width: auto; }
 .brand-fallback { display: inline-flex; align-items: center; gap: 8px; }
 .brand-fallback[hidden] { display: none; }
-.brand-mark { height: 17px; width: auto; fill: var(--orange); }
+.brand-mark { height: 18px; width: auto; fill: #FA6104; } /* 로고 원본 색 */
 .brand-word { font-family: "SUIT Variable", "SUIT", var(--font-title); font-weight: 900; font-size: 20px; line-height: 1; color: var(--orange); letter-spacing: -0.02em; }
 .topbar-meta { font-size: 13px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 

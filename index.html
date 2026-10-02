@@ -7,6 +7,19 @@
   <meta name="description" content="해커톤과 어흥콘 리팩토링을 거친 14기 15개 팀. 선배님의 가상 투자금 1표를 가장 기대되는 팀에 넣어 주세요." />
   <meta property="og:title" content="선배님, 어느 팀에 투자하시겠어요?" />
   <meta property="og:description" content="멋쟁이사자처럼 14기 · 어흥콘 출품 15팀 알럼나이 모의 엔젤 투자" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://alumni-invest.vercel.app/" />
+  <meta property="og:site_name" content="멋사대학 알럼나이" />
+  <meta property="og:image" content="https://alumni-invest.vercel.app/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="선배님, 어느 팀에 투자하시겠어요? 어흥콘 출품 15개 팀 모의 엔젤 투자" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#F9F9F9" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="icon-192.png" sizes="192x192" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,14 +34,12 @@
 
   <header class="topbar">
     <div class="wrap topbar-inner">
-      <!-- 원본 로고 파일을 img/logo.png 로 넣으면 그 이미지가 쓰이고, 없으면 아래 SVG 재현본이 나옵니다 -->
+      <!-- 사자 마크: 실제 로고를 따라 그린 SVG (img/logo-mark.svg 와 같은 도형) -->
       <a class="brand" href="./" aria-label="멋사대학 홈">
-        <img class="brand-img" src="img/logo.png" alt="멋사대학"
-             onerror="this.remove(); document.getElementById('brandFallback').hidden = false;" />
-        <span id="brandFallback" class="brand-fallback" hidden>
-          <svg class="brand-mark" viewBox="0 0 260 132" aria-hidden="true">
-            <polygon points="0,0 88,0 88,102 184,102 184,128 66,128 66,38" />
-            <polygon points="184,0 258,0 184,46" />
+        <span class="brand-fallback">
+          <svg class="brand-mark" viewBox="0 0 165 83" aria-hidden="true">
+            <polygon points="0,0 58,0 58,64 118,64 118,83 48,83 48,30" />
+            <polygon points="118,0 165,0 118,29.5" />
           </svg>
           <span class="brand-word">멋사대학</span>
         </span>

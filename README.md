@@ -35,7 +35,7 @@ anon 키는 공개돼도 괜찮습니다. 테이블은 RLS로 막혀 있고 `cas
 
 ## 운영 팁
 
-- **마감 설정**: SQL Editor에서 `update event_config set closes_at = '2026-10-12 23:59:59+09' where id = 1;` → 페이지에 D-day가 뜨고, 마감 후 투표가 막힙니다.
+- **마감 설정**: SQL Editor에서 `update event_config set closes_at = '2026-10-25 23:59:59+09' where id = 1;` → 페이지에 D-day가 뜨고, 마감 후 투표가 막힙니다.
 - **팀 딥링크**: `https://…/?team=aftor` 처럼 열면 해당 팀 IR이 바로 열립니다. (id는 `teams.js` 참고)
 - **대표 이미지**: `img/` 폴더에 `팀id-번호.jpg`로 넣고 `teams.js`의 해당 팀에 `images: ["img/aftor-1.jpg", "img/aftor-2.jpg"]`처럼 순서대로 적어 주세요. 첫 장은 카드 커버, 전체는 팀 상세 갤러리로 나옵니다. 없으면 트랙 색 커버가 나옵니다. (가로 1200px · 3:2 · 장당 300KB 이하 권장)
 - **최종 순위/기수별 참여**: `schema.sql` 하단 운영용 쿼리 참고

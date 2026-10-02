@@ -27,7 +27,7 @@ create table if not exists public.event_config (
   closes_at  timestamptz
 );
 insert into public.event_config (id, closes_at)
-values (1, '2026-10-31 23:59:59+09')
+values (1, '2026-10-25 23:59:59+09')
 on conflict (id) do update set closes_at = excluded.closes_at;
 
 -- 3) RLS: 익명 사용자는 테이블에 직접 접근 불가 (이메일 보호)
@@ -122,7 +122,7 @@ grant execute on function public.get_event_config() to anon, authenticated;
 grant execute on function public.get_comments() to anon, authenticated;
 
 -- ───────── 운영용 쿼리 (필요할 때 SQL Editor 에서 실행) ─────────
--- 마감 설정:   update event_config set closes_at = '2026-10-12 23:59:59+09' where id = 1;
+-- 마감 설정:   update event_config set closes_at = '2026-10-25 23:59:59+09' where id = 1;
 -- 마감 해제:   update event_config set closes_at = null where id = 1;
 -- 순위 확인:   select team_id, count(*) from votes group by team_id order by 2 desc;
 -- 기수별 참여: select generation, count(*) from votes group by 1 order by 1;

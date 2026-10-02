@@ -6,7 +6,7 @@ window.APP_CONFIG = {
 
   // 투표 마감 시각 (ISO 8601). 데모 모드에서 D-day 표시에 쓰입니다.
   // 실제 Supabase 연결 시에는 event_config.closes_at 값이 우선합니다.
-  CLOSES_AT: "2026-10-31T23:59:59+09:00",
+  CLOSES_AT: "2026-10-25T23:59:59+09:00",
 
   // 1표당 가상 투자금 (원)
   UNIT_KRW: 10000000,
